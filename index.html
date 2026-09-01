@@ -53,20 +53,21 @@
 		// Dates are approximate and plotted on the first day of each month.
 		gantt.config.date_format = "%d-%m-%Y";
 
-		// Recommended scale for this long-range plan.
-		gantt.config.scale_unit = "year";
-		gantt.config.date_scale = "%Y";
-		gantt.config.subscales = [
-			{ unit: "month", step: 3, date: "%M" }
+		// Set column width for the timeline to keep a 21-year chart compact
+		gantt.config.min_column_width = 40;
+		gantt.config.scale_height = 50;
+
+		// Multi-year scale configuration for 21-year timeline
+		gantt.config.scales = [
+			{ unit: "year", step: 5, format: "%Y" }, // Top scale: 5-year buckets (e.g. 2025, 2030)
+			{ unit: "year", step: 1, format: "'%y" }  // Bottom scale: Individual years (e.g. '25, '26)
 		];
 
 		gantt.config.columns = [
 			{ name: "text", label: "TSF Stage", tree: true, width: 280 },
-			{ name: "crest_rl", label: "Crest RL", align: "center", width: 90 },
 			{ name: "capacity_mt", label: "Capacity (Mt)", align: "center", width: 95 },
 			{ name: "cumulative_mt", label: "Cumulative (Mt)", align: "center", width: 110 },
-			{ name: "start_date", label: "Deposition Start", align: "center", width: 110 },
-			{ name: "end_date", label: "Capacity End", align: "center", width: 110 }
+			{ name: "start_date", label: "Deposition Start", align: "center", width: 110 }
 		];
 
 		gantt.templates.tooltip_text = function(start, end, task) {
