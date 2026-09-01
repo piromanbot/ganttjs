@@ -86,28 +86,6 @@
 				"<br><b>Stage capacity:</b> " + task.capacity_mt + " Mt" +
 				"<br><b>Cumulative capacity:</b> " + task.cumulative_mt + " Mt";
 		};
-		// Removes all text inside the timeline task bars
-		gantt.templates.task_text = function(start, end, task) {
-			return "";
-		};
-
-		// Set custom height for Task 101 (e.g., 14px instead of default 35px)
-		gantt.templates.task_row_class = function(start, end, task) {
-			if (task.id === 101) return "small-row";
-		};
-
-		gantt.templates.grid_row_class = function(start, end, task) {
-			if (task.id === 101) return "hide-grid-row";
-		};
-
-		// Target individual task row heights dynamically
-		gantt.config.row_height = 35; // Default height for all other rows
-		gantt.templates.row_height = function(task) {
-			if (task.id === 101) {
-				return 14; // Smaller row height for ID 101
-			}
-			return 35;
-		};
 
 		gantt.init("gantt_here");
 
@@ -131,14 +109,14 @@
 					capacity_mt: 1.80,
 					cumulative_mt: 1.80
 				},
-				{
-					id: 101,
-					text: "Construction",
-					start_date: "01-01-2028",
-					end_date: "01-07-2028",
-					parent: 1,
-					color: "#ff9800"
-				},
+				// {
+				// 	id: 101,
+				// 	text: "Construction",
+				// 	start_date: "01-01-2028",
+				// 	end_date: "01-07-2028",
+				// 	parent: 1,
+				// 	color: "#ff9800"
+				// },
 				{
 					id: 3,
 					text: "TSF 3 Cell F, Stage 1B",
