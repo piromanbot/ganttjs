@@ -34,6 +34,35 @@
 			width: 100%;
 			height: calc(100% - 52px);
 		}
+		.legend {
+			display: flex;
+			align-items: center;
+			gap: 16px;
+			margin-left: auto;
+			font-size: 13px;
+			color: #444;
+		}
+		.legend .swatch {
+			display: inline-block;
+			width: 22px;
+			height: 12px;
+			border-radius: 3px;
+			vertical-align: middle;
+			margin-right: 6px;
+		}
+		.legend .swatch.deposition {
+			background: #0288d1;
+		}
+		.legend .swatch.construction {
+			background: #f39c12;
+		}
+		.gantt_task_line.thin_project {
+			height: 8px;
+			margin-top: 10px;
+		}
+		.gantt_task_line.thin_project .gantt_task_content {
+			height: 8px;
+		}
 	</style>
 </head>
 <body>
@@ -41,6 +70,10 @@
 		<button onclick="exportPDF()">Export to PDF</button>
 		<button onclick="exportPNG()">Export to PNG</button>
 		<button onclick="window.print()">Print</button>
+		<div class="legend">
+			<span><span class="swatch construction"></span>Construction</span>
+			<span><span class="swatch deposition"></span>Deposition</span>
+		</div>
 	</div>
 	<div id="gantt_here"></div>
 
@@ -69,6 +102,17 @@
 			{ name: "cumulative_mt", label: "Cumulative (Mt)", align: "center", width: 110 },
 			{ name: "start_date", label: "Deposition Start", align: "center", width: 110 }
 		];
+
+		// Parent (project) rows render as thin bars; no text labels on any bars
+		gantt.templates.task_class = function(start, end, task) {
+			if (task.type === "project" || task.type === gantt.config.types.project) {
+				return "thin_project";
+			}
+			return "";
+		};
+		gantt.templates.task_text = function() { return ""; };
+		gantt.templates.rightside_text = function() { return ""; };
+		gantt.templates.leftside_text = function() { return ""; };
 
 		gantt.templates.tooltip_text = function(start, end, task) {
 			if (task.phase === "construction") {
