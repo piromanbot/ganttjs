@@ -71,11 +71,6 @@
 		];
 
 		gantt.templates.tooltip_text = function(start, end, task) {
-			if (task.phase === "construction") {
-				return "<b>Construction:</b> " + task.text.replace("Construction - ", "") +
-					"<br><b>Start:</b> " + gantt.templates.tooltip_date_format(start) +
-					"<br><b>End:</b> " + gantt.templates.tooltip_date_format(end);
-			}
 			return "<b>Stage:</b> " + task.text +
 				"<br><b>Deposition start:</b> " + gantt.templates.tooltip_date_format(start) +
 				"<br><b>Capacity end:</b> " + gantt.templates.tooltip_date_format(end) +
@@ -106,38 +101,17 @@
 					capacity_mt: 1.80,
 					cumulative_mt: 1.80
 				},
-			{
-				id: 3,
-				text: "TSF 3 Cell F, Stage 1B",
-				type: "split",
-				render: "split",
-				parent: 1,
-				progress: 0,
-				crest_rl: "10,520.0",
-				capacity_mt: 2.30,
-				cumulative_mt: 4.10
-			},
-			{
-				id: 3001,
-				text: "Construction - TSF 3 Cell F, Stage 1B",
-				start_date: "01-01-2028",
-				end_date: "01-07-2028",
-				parent: 3,
-				progress: 0,
-				color: "#f39c12",
-				phase: "construction"
-			},
-			{
-				id: 3002,
-				text: "TSF 3 Cell F, Stage 1B",
-				start_date: "01-07-2028",
-				end_date: "01-10-2029",
-				parent: 3,
-				progress: 0,
-				crest_rl: "10,520.0",
-				capacity_mt: 2.30,
-				cumulative_mt: 4.10
-			},
+				{
+					id: 3,
+					text: "TSF 3 Cell F, Stage 1B",
+					start_date: "01-07-2028",
+					end_date: "01-10-2029",
+					parent: 1,
+					progress: 0,
+					crest_rl: "10,520.0",
+					capacity_mt: 2.30,
+					cumulative_mt: 4.10
+				},
 				{
 					id: 4,
 					text: "TSF 3 Cell E, Lift 3",
@@ -331,8 +305,8 @@
 			],
 
 			links: [
-			{ id: 1, source: 2, target: 3002, type: "0" },
-			{ id: 2, source: 3002, target: 4, type: "0" },
+				{ id: 1, source: 2, target: 3, type: "0" },
+				{ id: 2, source: 3, target: 4, type: "0" },
 				{ id: 3, source: 4, target: 5, type: "0" },
 				{ id: 4, source: 5, target: 6, type: "0" },
 				{ id: 5, source: 6, target: 7, type: "0" },
