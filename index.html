@@ -34,48 +34,6 @@
 			width: 100%;
 			height: calc(100% - 52px);
 		}
-		.construction-bar {
-			position: absolute;
-			background: repeating-linear-gradient(
-				45deg,
-				#f39c12,
-				#f39c12 6px,
-				#f5b041 6px,
-				#f5b041 12px
-			);
-			border: 1px solid #d68910;
-			border-radius: 3px;
-			opacity: 0.95;
-		}
-		.legend {
-			display: flex;
-			align-items: center;
-			gap: 16px;
-			margin-left: auto;
-			font-size: 13px;
-			color: #444;
-		}
-		.legend .swatch {
-			display: inline-block;
-			width: 22px;
-			height: 12px;
-			border-radius: 3px;
-			vertical-align: middle;
-			margin-right: 6px;
-		}
-		.legend .swatch.deposition {
-			background: #0288d1;
-		}
-		.legend .swatch.construction {
-			background: repeating-linear-gradient(
-				45deg,
-				#f39c12,
-				#f39c12 6px,
-				#f5b041 6px,
-				#f5b041 12px
-			);
-			border: 1px solid #d68910;
-		}
 	</style>
 </head>
 <body>
@@ -83,10 +41,6 @@
 		<button onclick="exportPDF()">Export to PDF</button>
 		<button onclick="exportPNG()">Export to PNG</button>
 		<button onclick="window.print()">Print</button>
-		<div class="legend">
-			<span><span class="swatch construction"></span>Construction (6 months prior)</span>
-			<span><span class="swatch deposition"></span>Deposition</span>
-		</div>
 	</div>
 	<div id="gantt_here"></div>
 
@@ -126,26 +80,6 @@
 		};
 
 		gantt.init("gantt_here");
-
-		// Draw a construction segment (6 months before deposition start) in the same row
-		gantt.addTaskLayer(function drawConstruction(task) {
-			if (!task.start_date || task.type === gantt.config.types.project) {
-				return false;
-			}
-			var constructionStart = gantt.date.add(task.start_date, -6, "month");
-			var sizes = gantt.getTaskPosition(task, constructionStart, task.start_date);
-			var el = document.createElement("div");
-			el.className = "construction-bar";
-			el.style.left = sizes.left + "px";
-			el.style.top = (sizes.top + Math.round((gantt.config.row_height - gantt.config.bar_height) / 2)) + "px";
-			el.style.width = sizes.width + "px";
-			el.style.height = gantt.config.bar_height + "px";
-			el.title = "Construction: " +
-				gantt.templates.tooltip_date_format(constructionStart) + " - " +
-				gantt.templates.tooltip_date_format(task.start_date) +
-				" (" + task.text + ")";
-			return el;
-		});
 
 		gantt.parse({
 			tasks: [
